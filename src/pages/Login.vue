@@ -37,7 +37,11 @@ const onSubmit = () => {
 
     login(form.account, form.password)
       .then((res) => {
-        console.log(res);
+        ElNotification({
+          title: "Success",
+          message: "login success",
+          type: "success",
+        });
       })
       .catch((err) => {
         console.log(err.response.data);
