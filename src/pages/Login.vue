@@ -2,6 +2,7 @@
 import { ref, reactive } from "vue";
 import { View, User, Lock } from "@element-plus/icons-vue";
 import { login } from "../api/manager";
+import { ElNotification } from "element-plus";
 
 // do not use same name with ref
 const form = reactive({
@@ -12,16 +13,18 @@ const form = reactive({
 const rule = {
   account: [
     {
+      required: true,
       message: "Please input Activity name",
-      trigger: "blur",
+      trigger: "change",
     },
   ],
   password: [
     {
+      required: true,
       min: 1,
       max: 12,
       message: "Length should be 1 to 12",
-      trigger: "blur",
+      trigger: "change",
     },
   ],
 };
@@ -30,15 +33,23 @@ const formRef = ref("formRef");
 
 const onSubmit = () => {
   formRef.value.validate((valid) => {
-    return valid;
+    if (!valid) return false;
+
+    login(form.account, form.password)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        ElNotification({
+          message: err.response.data.msg || "request failed",
+          type: "error",
+          duration: 3000,
+        });
+      });
+
+    return false;
   });
-  login(form.account, form.password)
-    .then((res) => {
-      console.log("success:", res);
-    })
-    .catch((err) => {
-      console.log("error:", err);
-    });
 };
 </script>
 <template>
@@ -90,7 +101,7 @@ const onSubmit = () => {
           <el-button
             round
             color="#66ccff"
-            class="w-[250px]"
+            class="w-[250px] transition-all"
             type="primary"
             @click="onSubmit"
             >login</el-button
