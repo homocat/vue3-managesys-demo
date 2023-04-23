@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
 import { View, User, Lock } from "@element-plus/icons-vue";
+import { login } from "../api/manager.js";
 
 // do not use same name with ref
 const form = reactive({
@@ -11,28 +12,15 @@ const form = reactive({
 const rule = {
   account: [
     {
-      max: 8,
-      required: true,
       message: "Please input Activity name",
-      trigger: "blur",
-    },
-    {
-      min: 3,
-      max: 5,
-      message: "Length should be 3 to 5",
       trigger: "blur",
     },
   ],
   password: [
     {
-      required: true,
-      message: "input passwd",
-      trigger: "blur",
-    },
-    {
-      min: 6,
+      min: 1,
       max: 12,
-      message: "Length should be 3 to 5",
+      message: "Length should be 1 to 12",
       trigger: "blur",
     },
   ],
@@ -44,6 +32,13 @@ const onSubmit = () => {
   formRef.value.validate((valid) => {
     return valid;
   });
+  login(form.account, form.password)
+    .then((res) => {
+      console.log("success:", res);
+    })
+    .catch((err) => {
+      console.log("error:", err);
+    });
 };
 </script>
 <template>
