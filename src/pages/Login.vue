@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
 import { View, User, Lock } from "@element-plus/icons-vue";
-import { login } from "../api/manager.js";
+import { login } from "../api/manager";
 
 // do not use same name with ref
 const form = reactive({
