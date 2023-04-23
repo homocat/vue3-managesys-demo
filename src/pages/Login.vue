@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { reactive } from "vue";
-import { View, User } from "@element-plus/icons-vue";
+import { ref, reactive } from "vue";
+import { View, User, Lock } from "@element-plus/icons-vue";
 
 // do not use same name with ref
 const form = reactive({
@@ -8,8 +8,42 @@ const form = reactive({
   password: "",
 });
 
+const rule = {
+  account: [
+    {
+      max: 8,
+      required: true,
+      message: "Please input Activity name",
+      trigger: "blur",
+    },
+    {
+      min: 3,
+      max: 5,
+      message: "Length should be 3 to 5",
+      trigger: "blur",
+    },
+  ],
+  password: [
+    {
+      required: true,
+      message: "input passwd",
+      trigger: "blur",
+    },
+    {
+      min: 6,
+      max: 12,
+      message: "Length should be 3 to 5",
+      trigger: "blur",
+    },
+  ],
+};
+
+const formRef = ref("formRef");
+
 const onSubmit = () => {
-  console.log("submit!");
+  formRef.value.validate((valid) => {
+    return valid;
+  });
 };
 </script>
 <template>
@@ -35,8 +69,8 @@ const onSubmit = () => {
         <span class="h-[1px] w-16 bg-gray-300"></span>
       </div>
 
-      <el-form :model="form" class="w-[250]">
-        <el-form-item>
+      <el-form ref="formRef" :rules="rule" :model="form" class="w-[250]">
+        <el-form-item prop="account">
           <el-input v-model="form.account" placeholder="account">
             <template #prefix>
               <el-icon class="el-input__icon"><user /></el-icon>
@@ -44,10 +78,15 @@ const onSubmit = () => {
           </el-input>
         </el-form-item>
 
-        <el-form-item>
-          <el-input v-model="form.password" placeholder="passwd">
+        <el-form-item prop="password">
+          <el-input
+            type="password"
+            show-password
+            v-model="form.password"
+            placeholder="passwd"
+          >
             <template #prefix>
-              <el-icon class="el-input__icon"><View /></el-icon>
+              <el-icon class="el-input__icon"><lock /></el-icon>
             </template>
           </el-input>
         </el-form-item>
