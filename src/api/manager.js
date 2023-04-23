@@ -4,9 +4,9 @@ const service = axios.create(() => {
   baseURL: "/api";
 });
 
-const login = (account, password) => {
+const login = (usename, password) => {
   return service.post("/admin/login", {
-    account,
+    usename,
     password,
   });
 };
