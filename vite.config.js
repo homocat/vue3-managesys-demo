@@ -11,5 +11,17 @@ export default defineConfig({
       "~": path.resolve(__dirname, "src"),
     },
   },
+
+  server: {
+    host: "0.0.0.0",
+    proxy: {
+      "/api": {
+        target: "localhost:8000",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
+
   plugins: [vue(), WindiCSS()],
 });
