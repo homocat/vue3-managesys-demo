@@ -39,27 +39,18 @@ const onSubmit = () => {
   formRef.value.validate((valid) => {
     if (!valid) return false;
 
-    login(form.account, form.password)
-      .then((res) => {
-        ElNotification({
-          title: "Success",
-          message: "login success",
-          type: "success",
-        });
-
-        const cookie = useCookies(["locale"]);
-        cookie.set("admin-token", res.data.data.token);
-
-        router.push("/");
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-        ElNotification({
-          message: err.response.data.msg || "request failed",
-          type: "error",
-          duration: 3000,
-        });
+    login(form.account, form.password).then((res) => {
+      ElNotification({
+        title: "Success",
+        message: "login success",
+        type: "success",
       });
+
+      const cookie = useCookies(["locale"]);
+      cookie.set("admin-token", res);
+
+      router.push("/");
+    });
 
     return false;
   });
