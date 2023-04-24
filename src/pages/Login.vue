@@ -32,33 +32,27 @@ const rule = {
   ],
 };
 
-const formRef = ref("formRef");
+const formRef = ref();
 const router = useRouter();
 
 const onSubmit = () => {
   formRef.value.validate((valid) => {
     if (!valid) return false;
 
-    login(form.account, form.password)
-      .then((res) => {
-        ElNotification({
-          title: "Success",
-          message: "login success",
-          type: "success",
-        });
-
-        const cookie = useCookies(["locale"]);
-        cookie.set("admin-token", res);
-
-        router.push("/");
-      })
-      .catch((error) => {
-        ElNotification({
-          message: error.response.data.msg || "request failed",
-          type: "error",
-          duration: 3000,
-        });
+    login(form.account, form.password).then((res) => {
+      ElNotification({
+        title: "Success",
+        message: "login success",
+        type: "success",
       });
+
+      const cookie = useCookies(["locale"]);
+      cookie.set("admin-token", res);
+
+      getInfo().then((res2) => console.log(res2));
+
+      router.push("/");
+    });
 
     return false;
   });
