@@ -32,7 +32,7 @@ const rule = {
   ],
 };
 
-const formRef = ref("formRef");
+const formRef = ref();
 const router = useRouter();
 
 const onSubmit = () => {
@@ -63,7 +63,7 @@ const onSubmit = () => {
 <<<<<<< HEAD
 =======
       const cookie = useCookies(["locale"]);
-      cookie.set("admin-token", res.token);
+      cookie.set("admin-token", res["token"]);
 
       getInfo().then((res2) => console.log(res2));
       router.push("/");
