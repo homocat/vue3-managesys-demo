@@ -3,6 +3,9 @@ import { ref, reactive } from "vue";
 import { View, User, Lock } from "@element-plus/icons-vue";
 import { login } from "../api/manager";
 import { ElNotification } from "element-plus";
+import { useRouter } from "vue-router";
+
+import { useCookies } from "@vueuse/integrations/useCookies";
 
 // do not use same name with ref
 const form = reactive({
@@ -30,6 +33,7 @@ const rule = {
 };
 
 const formRef = ref("formRef");
+const router = useRouter();
 
 const onSubmit = () => {
   formRef.value.validate((valid) => {
@@ -42,6 +46,11 @@ const onSubmit = () => {
           message: "login success",
           type: "success",
         });
+
+        const cookie = useCookies(["locale"]);
+        cookie.set("admin-token", res.data.data.token);
+
+        router.push("/");
       })
       .catch((err) => {
         console.log(err.response.data);
