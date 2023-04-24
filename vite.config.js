@@ -16,7 +16,7 @@ export default defineConfig({
     host: "0.0.0.0",
     proxy: {
       "/api": {
-        target: "localhost:8000",
+        target: "http://ceshi13.dishait.cn",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

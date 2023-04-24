@@ -1,14 +1,12 @@
 import axios from "axios";
 
-const service = axios.create(() => {
-  baseURL: "/api";
+const service = axios.create({
+  baseURL: "/api",
 });
 
-service.defaults.headers.common["Content-Type"] = "application/json";
-
-const login = (usename, password) => {
+const login = (username, password) => {
   return service.post("/admin/login", {
-    usename,
+    username,
     password,
   });
 };
