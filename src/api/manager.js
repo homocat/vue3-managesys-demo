@@ -6,4 +6,9 @@ const login = (username, password) => {
     password,
   });
 };
-export { login };
+
+const getInfo = () => {
+  return service.post("/admin/getinfo");
+};
+
+export { login, getInfo };

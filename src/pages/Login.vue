@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
 import { View, User, Lock } from "@element-plus/icons-vue";
-import { login } from "../api/manager";
+import { login, getInfo } from "../api/manager";
 import { ElNotification } from "element-plus";
 import { useRouter } from "vue-router";
 
@@ -48,6 +48,8 @@ const onSubmit = () => {
 
       const cookie = useCookies(["locale"]);
       cookie.set("admin-token", res);
+
+      getInfo().then((res2) => console.log(res2));
 
       router.push("/");
     });
