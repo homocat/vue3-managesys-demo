@@ -47,9 +47,9 @@ const onSubmit = () => {
       });
 
       const cookie = useCookies(["locale"]);
-      cookie.set("admin-token", res);
+      cookie.set("admin-token", res["token"]);
 
-      getInfo().then((res2) => console.log(res2));
+      getInfo().then();
 
       router.push("/");
     });
