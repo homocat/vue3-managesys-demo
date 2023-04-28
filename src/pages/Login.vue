@@ -4,8 +4,7 @@ import { View, User, Lock } from "@element-plus/icons-vue";
 import { login, getInfo } from "../api/manager";
 import { ElNotification } from "element-plus";
 import { useRouter } from "vue-router";
-
-import { useCookies } from "@vueuse/integrations/useCookies";
+import { setCookie } from "../composables/auth";
 
 // do not use same name with ref
 const form = reactive({
@@ -46,8 +45,7 @@ const onSubmit = () => {
         type: "success",
       });
 
-      const cookie = useCookies(["locale"]);
-      cookie.set("admin-token", res["token"]);
+      setCookie(res["token"]);
 
       getInfo().then();
 
