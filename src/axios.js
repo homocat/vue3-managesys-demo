@@ -1,8 +1,6 @@
 import axios from "axios";
-import { ElNotification } from "element-plus";
-import { setCookie, getCookie } from "./composables/auth";
-import { toast } from "./composables/utils";
-import { type } from "windicss/utils";
+import { setCookie, getCookie } from "~/composables/auth";
+import { toast } from "~/composables/utils";
 
 const service = axios.create({
   baseURL: "/api",
