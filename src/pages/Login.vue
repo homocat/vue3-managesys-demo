@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, toDisplayString } from "vue";
 import { View, User, Lock } from "@element-plus/icons-vue";
 import { login, getInfo } from "../api/manager";
-import { ElNotification } from "element-plus";
 import { useRouter } from "vue-router";
 import { setCookie } from "../composables/auth";
+import { toast } from "../composables/utils";
 
 // do not use same name with ref
 const form = reactive({
@@ -35,24 +35,17 @@ const formRef = ref();
 const router = useRouter();
 
 const onSubmit = () => {
-  formRef.value.validate((valid) => {
-    if (!valid) return false;
+  formRef.value.validate((notValid: boolean) => {
+    notValid &&
+      login(form.account, form.password).then((res) => {
+        if (res.msg != "ok") return;
 
-    login(form.account, form.password).then((res) => {
-      ElNotification({
-        title: "Success",
-        message: "login success",
-        type: "success",
+        toast("login success");
+        setCookie(res.data.token);
+
+        getInfo();
+        router.push("/");
       });
-
-      setCookie(res["token"]);
-
-      getInfo().then();
-
-      router.push("/");
-    });
-
-    return false;
   });
 };
 </script>

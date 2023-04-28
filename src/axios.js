@@ -1,6 +1,8 @@
 import axios from "axios";
 import { ElNotification } from "element-plus";
 import { setCookie, getCookie } from "./composables/auth";
+import { toast } from "./composables/utils";
+import { type } from "windicss/utils";
 
 const service = axios.create({
   baseURL: "/api",
@@ -28,17 +30,12 @@ service.interceptors.response.use(
   function (response) {
     // 2xx 范围内的状态码都会触发该函数。
     // 对响应数据做点什么
-    return response.data.data;
+    return response.data;
   },
   function (error) {
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
-    ElNotification({
-      title: "Error",
-      message: error || "failed",
-      type: "error",
-    });
-    return Promise.reject(error);
+    toast(error || "failed", "error");
   }
 );
 
