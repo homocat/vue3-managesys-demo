@@ -3,8 +3,10 @@ import { ref, reactive, toDisplayString } from "vue";
 import { View, User, Lock } from "@element-plus/icons-vue";
 import { login, getInfo } from "../api/manager";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import { setCookie } from "../composables/auth";
 import { toast } from "../composables/utils";
+import store from "../store";
 
 // do not use same name with ref
 const form = reactive({
@@ -43,7 +45,7 @@ const onSubmit = () => {
         toast("login success");
         setCookie(res.data.token);
 
-        getInfo();
+        getInfo().then((res2) => store.commit("SET_USERINFO", res2));
         router.push("/");
       });
   });
