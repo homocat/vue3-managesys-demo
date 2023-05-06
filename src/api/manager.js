@@ -12,7 +12,7 @@ const getInfo = () => {
 };
 
 const logout = () => {
-  return service.post("admin/logout");
+  return service.post("/admin/logout");
 };
 
 export { login, getInfo, logout };
