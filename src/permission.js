@@ -5,7 +5,6 @@ import { toast } from "./composables/utils";
 // 全局前置守卫
 router.beforeEach((to, from, next) => {
   const token = getCookie();
-  console.log("router");
 
   // 如果没有登录强制跳转回登录页
   if (!token && to.path != "/login") {

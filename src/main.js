@@ -12,6 +12,6 @@ app.use(ElementPlus);
 app.use(router);
 app.use(store);
 
-import "./permision";
+import "./permission";
 
 app.mount("#app");
