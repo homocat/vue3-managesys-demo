@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import { getInfo } from "../api/manager";
 
 // Create a new store instance.
 const store = createStore({
@@ -11,6 +12,18 @@ const store = createStore({
   mutations: {
     SET_USERINFO(state, user) {
       state.user = user;
+    },
+  },
+  actions: {
+    getInfo({ commit }) {
+      return new Promise((resolve, reject) => {
+        getInfo()
+          .then((res) => {
+            commit("SET_USERINFO", res);
+            resolve(res);
+          })
+          .catch((err) => reject(err));
+      });
     },
   },
 });

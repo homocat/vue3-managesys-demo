@@ -45,7 +45,6 @@ const onSubmit = () => {
         toast("login success");
         setCookie(res.data.token);
 
-        getInfo().then((res2) => store.commit("SET_USERINFO", res2));
         router.push("/");
       });
   });
