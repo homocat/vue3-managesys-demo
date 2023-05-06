@@ -40,8 +40,6 @@ const onSubmit = () => {
   formRef.value.validate((notValid: boolean) => {
     notValid &&
       login(form.account, form.password).then((res) => {
-        if (res.msg != "ok") return;
-
         toast("login success");
         setCookie(res.data.token);
 

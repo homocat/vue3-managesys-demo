@@ -11,4 +11,8 @@ const getInfo = () => {
   return service.post("/admin/getinfo");
 };
 
-export { login, getInfo };
+const logout = () => {
+  return service.post("admin/logout");
+};
+
+export { login, getInfo, logout };
