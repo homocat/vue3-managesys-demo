@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, reactive, toDisplayString } from "vue";
+import { ref, reactive, onMounted, onBeforeUnmount } from "vue";
 import { View, User, Lock } from "@element-plus/icons-vue";
 import { login, getInfo } from "../api/manager";
 import { useRouter } from "vue-router";
@@ -49,6 +49,20 @@ const onSubmit = () => {
       });
   });
 };
+
+// 监听回车时间
+function onKeyUp(e) {
+  e.key == "Enter" && onSubmit();
+}
+
+// 添加键盘监听
+onMounted(() => {
+  document.addEventListener("keyup", onKeyUp);
+});
+// 移除键盘监听
+onBeforeUnmount(() => {
+  document.removeEventListener("keyup", onKeyUp);
+});
 </script>
 <template>
   <el-row class="min-h-screen">
