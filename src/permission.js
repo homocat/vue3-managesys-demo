@@ -25,6 +25,10 @@ router.beforeEach(async (to, from, next) => {
     await store.dispatch("getInfo");
   }
 
+  // 设置页面标题
+  let title = to.meta.title ? to.meta.title : "Ereflect Sys";
+  document.title = title;
+
   next();
 });
 

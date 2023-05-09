@@ -9,6 +9,9 @@ const routes = [
   {
     path: "/",
     component: Index,
+    meta: {
+      title: "后台首页",
+    },
   },
   {
     path: "/login",
