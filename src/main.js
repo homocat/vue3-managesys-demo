@@ -14,4 +14,6 @@ app.use(store);
 
 import "./permission";
 
+import "nprogress/nprogress.css";
+
 app.mount("#app");

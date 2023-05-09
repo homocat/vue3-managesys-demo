@@ -1,4 +1,5 @@
 import { ElNotification, ElMessageBox, ElMessage } from "element-plus";
+import nProgress from "nprogress";
 
 // Element 消息弹窗, 最后一个参数默认message为纯文本
 export function toast(
@@ -31,4 +32,14 @@ export function messagebox(content = "", type = "warning", title = "") {
         message: "canceled",
       });
     });
+}
+
+// 显示全局loading
+export function showFullLoading() {
+  nProgress.start();
+}
+
+// 隐藏全局loading
+export function hideFullLoading() {
+  nProgress.done();
 }

@@ -1,10 +1,12 @@
 import router from "./router/index";
 import { getCookie } from "./composables/auth";
-import { toast } from "./composables/utils";
+import { toast, showFullLoading, hideFullLoading } from "./composables/utils";
 import store from "./store/index";
 
 // 全局前置守卫
 router.beforeEach(async (to, from, next) => {
+  showFullLoading();
+
   const token = getCookie();
 
   // 如果没有登录强制跳转回登录页
@@ -24,4 +26,9 @@ router.beforeEach(async (to, from, next) => {
   }
 
   next();
+});
+
+// 全局后置守卫
+router.afterEach((to, from) => {
+  hideFullLoading();
 });
