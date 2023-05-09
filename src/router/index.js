@@ -4,14 +4,22 @@ import Index from "~/pages/Index.vue";
 import About from "~/pages/About.vue";
 import NotFound from "~/pages/404.vue";
 import Login from "~/pages/Login.vue";
+import Admin from "~/layout/admin.vue";
 
 const routes = [
   {
     path: "/",
-    component: Index,
-    meta: {
-      title: "后台首页",
-    },
+    component: Admin,
+    // 子路由
+    children: [
+      {
+        path: "/",
+        component: Index,
+        meta: {
+          title: "后台首页",
+        },
+      },
+    ],
   },
   {
     path: "/login",
