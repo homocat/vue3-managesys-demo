@@ -1,14 +1,64 @@
+<script setup>
+import { messagebox, toast } from "~/composables/utils.js";
+import { logout } from "~/api/manager";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { useFullscreen } from "@vueuse/core";
+
+const { isFullscreen, toggle } = useFullscreen();
+
+const router = useRouter();
+const store = useStore();
+
+function handleLogout() {
+  messagebox("log out", "warning", "confirm")
+    .then((res) => {
+      logout().finally(() => {
+        store.dispatch("logout");
+        // 跳转回登录页
+        router.push("/login");
+        toast("logout");
+      });
+    })
+    .catch((err) => {
+      console.log("failed log out");
+    });
+}
+
+const handleCommand = (c) => {
+  switch (c) {
+    case "logout":
+      handleLogout();
+      break;
+
+    case "rePassword":
+      console.log("object");
+      break;
+  }
+};
+
+const handleRefresh = () => location.reload();
+</script>
 <template>
   <div class="f-header">
     <span class="logo">
       <el-icon class="mr-1"><eleme-filled /></el-icon>
       Ereflect
     </span>
+
     <el-icon class="icon-btn"><fold /></el-icon>
-    <el-icon class="icon-btn"><refresh /></el-icon>
+    <el-tooltip class="box-item" content="刷新" placement="bottom">
+      <el-icon class="icon-btn" @click="handleRefresh"><refresh /></el-icon>
+    </el-tooltip>
+
     <div class="ml-auto flex items-center">
-      <el-icon class="icon-btn"><FullScreen /></el-icon>
-      <el-dropdown class="dropdown">
+      <el-tooltip class="box-item" content="全屏" placement="bottom">
+        <el-icon class="icon-btn" @class="toggle">
+          <FullScreen v-if="!isFullscreen" />
+          <Aim v-else />
+        </el-icon>
+      </el-tooltip>
+      <el-dropdown @command="handleCommand" rigger="click" class="dropdown">
         <span class="flex items-center justify-center text-light-50">
           <el-avatar
             class="mr-2"
@@ -22,8 +72,8 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>退出登录</el-dropdown-item>
-            <el-dropdown-item>休改密码</el-dropdown-item>
+            <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+            <el-dropdown-item command="rePassword">休改密码</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
