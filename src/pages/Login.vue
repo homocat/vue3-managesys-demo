@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, onBeforeUnmount } from "vue";
-import { View, User, Lock } from "@element-plus/icons-vue";
+// import { View, User, Lock } from "@element-plus/icons-vue";
 import { login, getInfo } from "../api/manager";
 import { useRouter } from "vue-router";
 
