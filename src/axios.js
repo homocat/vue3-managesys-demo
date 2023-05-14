@@ -1,6 +1,7 @@
 import axios from "axios";
 import { setCookie, getCookie } from "~/composables/auth";
 import { toast } from "~/composables/utils";
+import store from "./store";
 
 const service = axios.create({
   baseURL: "/api",
@@ -31,9 +32,14 @@ service.interceptors.response.use(
     return response.data;
   },
   function (error) {
+    const msg = error || "failed";
+
+    if ((msg = "非法token,请先登录")) {
+      store.dispatch("logout").finally(() => location.reload());
+    }
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
-    toast(error || "failed", "error");
+    toast(msg, "error");
   }
 );
 
