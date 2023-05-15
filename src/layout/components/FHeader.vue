@@ -4,6 +4,8 @@ import { logout } from "~/api/manager";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { useFullscreen } from "@vueuse/core";
+import { ref } from "vue";
+import FormDrawer from "../../components/FormDrawer.vue";
 
 const { isFullscreen, toggle } = useFullscreen();
 
@@ -25,6 +27,7 @@ function handleLogout() {
     });
 }
 
+const formDrawerRef = ref(null);
 const handleCommand = (c) => {
   switch (c) {
     case "logout":
@@ -32,7 +35,7 @@ const handleCommand = (c) => {
       break;
 
     case "rePassword":
-      console.log("object");
+      formDrawerRef.value.open();
       break;
   }
 };
@@ -72,13 +75,18 @@ const handleRefresh = () => location.reload();
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item command="logout">退出登录</el-dropdown-item>
             <el-dropdown-item command="rePassword">休改密码</el-dropdown-item>
+            <el-dropdown-item command="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
     </div>
   </div>
+
+  <FormDrawer ref="formDrawerRef">
+    12
+    <div class="bg-rose-400" style="height: 1000px"></div>
+  </FormDrawer>
 </template>
 
 <style>
